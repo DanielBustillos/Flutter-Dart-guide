@@ -1,3 +1,3 @@
 En este módulo se desarollaron apps sencillas con botones y algo de estilo. 
 
-![App de colores](./assets/appColores.png)
+<img src="./assets/appColores.png" alt="drawing" style="width:200px;"/>
