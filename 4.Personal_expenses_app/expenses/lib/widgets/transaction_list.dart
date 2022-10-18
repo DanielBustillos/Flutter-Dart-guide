@@ -4,13 +4,17 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTransaction;
 
-  TransactionList({@required this.transactions});
+  TransactionList({
+    @required this.transactions,
+    @required this.deleteTransaction,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 400,
+        height: 650,
         child: transactions.isEmpty
             ? Column(
                 children: <Widget>[
@@ -33,24 +37,33 @@ class TransactionList extends StatelessWidget {
             : ListView.builder(
                 itemBuilder: (ctx, index) {
                   return Card(
-                    elevation: 3,
-                    margin: EdgeInsets.symmetric(vertical: 8,
-                    horizontal: 20),
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: FittedBox(
-                            child: Text('\$${transactions[index].amount}')),
+                      elevation: 3,
+                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30,
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: FittedBox(
+                                child: Text('\$${transactions[index].amount}')),
+                          ),
                         ),
-                      ),
-                      title: Text(transactions[index].title, 
-                      style: Theme.of(context).textTheme.titleLarge,),
-                      subtitle: Text(DateFormat.yMMMd().format(transactions[index].date,),
-                      style: Theme.of(context).textTheme.titleMedium,)
-                      ),
-                  );
+                        title: Text(
+                          transactions[index].title,
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        subtitle: Text(
+                          DateFormat.yMMMd().format(
+                            transactions[index].date,
+                          ),
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          color: Theme.of(context).errorColor,
+                          onPressed: () => deleteTransaction(transactions[index].id),
+                        ),
+                      ));
                 },
                 itemCount: transactions.length,
               ));
