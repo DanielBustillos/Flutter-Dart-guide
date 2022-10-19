@@ -38,25 +38,22 @@ class _MyHomePageState extends State<MyHomePage> {
   String amountInput;
 
   final List<Transaction> _userTransactions = [
-    // Transaction(
-    //   id: "1",
-    //   title: "New shoes",
-    //   amount: 33.1,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: "2",
-    //   title: "Airbnb",
-    //   amount: 103.1,
-    //   date: DateTime.now(),
-    // )
+    Transaction(
+      id: "1",
+      title: "New shoes",
+      amount: 33.1,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "2",
+      title: "Airbnb",
+      amount: 103.1,
+      date: DateTime.now(),
+    )
   ];
 
   void _addNewTransaction(
-    String txTitle,
-    double txAmount,
-    DateTime choosenDate
-  ) {
+      String txTitle, double txAmount, DateTime choosenDate) {
     final newTx = Transaction(
       title: txTitle,
       amount: txAmount,
@@ -68,16 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-void _deleteTransaction(String id) {
-  setState(() {
-    _userTransactions.removeWhere((tx) {
-      return tx.id == id;
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((tx) {
+        return tx.id == id;
+      });
     });
-  });
-
-}
-
-
+  }
 
   void startAddNewTransacction(BuildContext ctx) {
     showModalBottomSheet(
@@ -104,28 +98,42 @@ void _deleteTransaction(String id) {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Personal expenses',
-          style: TextStyle(fontFamily: "OpenSans"),
-        ),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () => startAddNewTransacction(context),
-              icon: Icon(
-                Icons.add,
-                color: Colors.white,
-              ))
-        ],
+    final appBar = AppBar(
+      title: Text(
+        'Personal expenses',
+        style: TextStyle(fontFamily: "OpenSans"),
       ),
+      actions: <Widget>[
+        IconButton(
+            onPressed: () => startAddNewTransacction(context),
+            icon: Icon(
+              Icons.add,
+              color: Colors.white,
+            ))
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(_recentTransactions),
-            TransactionList(transactions: _userTransactions, deleteTransaction:_deleteTransaction ),
+            Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_recentTransactions)),
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.7,
+              child: TransactionList(
+                  transactions: _userTransactions,
+                  deleteTransaction: _deleteTransaction),
+            ),
           ],
         ),
       ),
