@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 
-
 class NewTransaction extends StatefulWidget {
   final Function addTx;
 
@@ -94,25 +93,31 @@ class _NewTransactionState extends State<NewTransaction> {
                     child: Text(
                       _selectedDate == null
                           ? "No date chosen"
-                          : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
+                          : 'Picked Date: ${DateFormat.yMd().format(
+                              _selectedDate,
+                            )}',
                     ),
                   ),
                   Platform.isIOS
-                  ? CupertinoButton(
-                      child: Text("Choosen date", style: TextStyle(
-                        fontWeight: FontWeight.bold,)),
-                      onPressed: _presentDatePicker,
-                      )
-                  : TextButton(
-                    style: flatButtonStyle,
-                    child: Text(
-                      "Choosen date",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: _presentDatePicker,
-                  ),
+                      ? CupertinoButton(
+                          child: Text(
+                            "Choosen date",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: _presentDatePicker,
+                        )
+                      : TextButton(
+                          style: flatButtonStyle,
+                          child: Text(
+                            "Choosen date",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          onPressed: _presentDatePicker,
+                        ),
                 ]),
               ),
               Platform.isIOS
@@ -120,7 +125,7 @@ class _NewTransactionState extends State<NewTransaction> {
                       color: Colors.pink[300],
                       child: Text("Add Transaction"),
                       onPressed: _submitData,
-                      )
+                    )
                   : ElevatedButton(
                       child: Text("Add Transaction"),
                       onPressed: _submitData,

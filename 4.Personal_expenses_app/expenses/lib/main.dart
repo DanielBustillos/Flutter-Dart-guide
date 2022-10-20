@@ -176,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final pageBody = SafeArea(child: SingleChildScrollView(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        //mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           if (isLandscape)
