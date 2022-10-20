@@ -15,24 +15,26 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         child: transactions.isEmpty
-            ? Column(
-                children: <Widget>[
-                  Text(
-                    "No transactions added yet",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    height: 200,
-                    child: Image.asset(
-                      "assets/images/waiting.png",
-                      fit: BoxFit.cover,
+            ? LayoutBuilder(builder: (ctx, constraints) {
+                return Column(
+                  children: <Widget>[
+                    Text(
+                      "No transactions added yet",
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
-                  ),
-                ],
-              )
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      height: constraints.maxHeight * 0.6,
+                      child: Image.asset(
+                        "assets/images/waiting.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                );
+              })
             : ListView.builder(
                 itemBuilder: (ctx, index) {
                   return Card(
@@ -57,11 +59,25 @@ class TransactionList extends StatelessWidget {
                           ),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                          onPressed: () => deleteTransaction(transactions[index].id),
-                        ),
+                        trailing: MediaQuery.of(context).size.width > 425
+                            ? TextButton.icon(
+                                label: Text("Borrar"),
+                                icon: Icon(Icons.delete),
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Colors.pink[200],
+                                ),
+                                //color: Theme.of(context).errorColor,
+                                onPressed: () =>
+                                    deleteTransaction(transactions[index].id),
+                                //color: Theme.of(context).errorColor,
+                              )
+                            : IconButton(
+                                icon: Icon(Icons.delete),
+                                color: Colors.pink[200],
+                                onPressed: () =>
+                                    deleteTransaction(transactions[index].id),
+                              ),
                       ));
                 },
                 itemCount: transactions.length,
